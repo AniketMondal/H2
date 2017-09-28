@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:src="@drawable/hostel"
         android:layout_marginTop="4dp"
         android:padding="1dp"
         android:background="#AAAAAA"/>

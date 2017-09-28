@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Notifications">
+
+        <SwitchPreference
+            android:key="mess"
+            android:title="Mess Menu"
+            android:summary="Receive notification about what's cooked in the mess before every meal"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="news"
+            android:title="News"
+            android:summary="Stay updated about upcoming events in hostel"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Feedback">
+
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

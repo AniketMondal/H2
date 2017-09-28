@@ -43,14 +43,14 @@ public class HomeMessFragment extends Fragment {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject menuItem = jsonArray.getJSONObject(i);
                 StringBuilder menu = new StringBuilder();
-                menu.append("Breakfast: ");
-                menu.append(menuItem.getString("BREAKFAST"));
-                menu.append("\nLunch: ");
-                menu.append(menuItem.getString("LUNCH"));
-                menu.append("\nTiffin: ");
-                menu.append(menuItem.getString("TIFFIN"));
-                menu.append("\nDinner: ");
-                menu.append(menuItem.getString("DINNER"));
+                menu.append("BREAKFAST:\n");
+                menu.append(menuItem.getString("BREAKFAST").trim());
+                menu.append("\n\nLUNCH:\n");
+                menu.append(menuItem.getString("LUNCH").trim());
+                menu.append("\n\nTIFFIN:\n");
+                menu.append(menuItem.getString("TIFFIN").trim());
+                menu.append("\n\nDINNER:\n");
+                menu.append(menuItem.getString("DINNER").trim());
                 menuList.add(new ExpandableItem(days[i], menu.toString()));
             }
         } catch (Exception e) {}
@@ -68,12 +68,12 @@ public class HomeMessFragment extends Fragment {
                 if(content.isShown()){
                     content.setVisibility(View.GONE);
                     content.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up));
-                    arrow.setImageResource(R.mipmap.ic_launcher);
+                    arrow.setImageResource(R.drawable.down_arrow);
                 }
                 else{
                     content.setVisibility(View.VISIBLE);
                     content.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down));
-                    arrow.setImageResource(R.mipmap.ic_launcher_round);
+                    arrow.setImageResource(R.drawable.up_arrow);
                 }
             }
         });

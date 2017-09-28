@@ -24,21 +24,6 @@ public class HomeCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment_calendar, container, false);
 
-        TextView menu = (TextView) view.findViewById(R.id.setting_menu);
-        TextView news = (TextView) view.findViewById(R.id.setting_news);
-
-        if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("mess",true)) {
-            menu.setText("Menu: true");
-        } else {
-            menu.setText("Menu: false");
-        }
-
-        if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("news",true)) {
-            news.setText("News: true");
-        } else {
-            news.setText("News: false");
-        }
-
         ImageView calendar = (ImageView) view.findViewById(R.id.calendar);
         calendar.setImageBitmap(WelcomeActivity.calendar);
 

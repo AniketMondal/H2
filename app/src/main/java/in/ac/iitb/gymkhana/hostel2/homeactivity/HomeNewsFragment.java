@@ -58,12 +58,12 @@ public class HomeNewsFragment extends Fragment {
                 if(content.isShown()){
                     content.setVisibility(View.GONE);
                     content.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up));
-                    arrow.setImageResource(R.mipmap.ic_launcher);
+                    arrow.setImageResource(R.drawable.down_arrow);
                 }
                 else{
                     content.setVisibility(View.VISIBLE);
                     content.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down));
-                    arrow.setImageResource(R.mipmap.ic_launcher_round);
+                    arrow.setImageResource(R.drawable.up_arrow);
                 }
             }
         });

@@ -23,15 +23,15 @@
         <activity
             android:name=".homeactivity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.GreyBack" />
         <activity
             android:name=".councilactivity.CouncilActivity"
             android:label="@string/title_activity_council"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.GreyBack" />
         <activity
             android:name=".infoactivity.InfoActivity"
             android:label="@string/title_activity_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.GreyBack" />
         <activity
             android:name=".settingsactivity.SettingsActivity"
             android:label="@string/title_activity_settings"

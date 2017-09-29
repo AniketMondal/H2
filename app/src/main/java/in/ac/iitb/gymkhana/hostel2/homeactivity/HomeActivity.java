@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -196,22 +198,17 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_login:
                 AlertDialog.Builder loginDialogBuilder = new AlertDialog.Builder(this);
                 View loginView = getLayoutInflater().inflate(R.layout.login_layout, null);
-                WebView loginWebView = (WebView) loginView.findViewById(R.id.login_webview);
-                loginWebView.loadUrl("https://gymkhana.iitb.ac.in/sso/oauth/authorize/?client_id=XWdEl57bq3NkT1XJac4uDKXOlURJl0yIreldL8U3&response_type=code&scope=ldap profile&redirect_uri=http://www.google.co.in/&state=some_state");
                 loginDialogBuilder.setView(loginView);
                 EditText loginEdittext = (EditText)  loginView.findViewById(R.id.login_edittext);
                 loginEdittext.requestFocus();
                 final Dialog loginDialog = loginDialogBuilder.create();
                 loginDialog.show();
                 loginView.requestFocus();
+                WebView loginWebView = (WebView) loginView.findViewById(R.id.login_webview);
+                loginWebView.loadUrl("https://gymkhana.iitb.ac.in/sso/oauth/authorize/?client_id=XWdEl57bq3NkT1XJac4uDKXOlURJl0yIreldL8U3&response_type=code&scope=ldap profile&redirect_uri=http://www.google.co.in/&state=some_state");
                 loginWebView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.clearCache(true);
-                        view.clearMatches();
-                        view.clearHistory();
-                        view.clearFormData();
-                        view.clearSslPreferences();
                         view.loadUrl(url);
                         if(url.contains("http://www.google.co.in/")){
                             if(url.contains("error=access_denied")){
@@ -220,6 +217,8 @@ public class HomeActivity extends AppCompatActivity
                             else{
                                 String AUTHORIZATION_CODE = getQueryMap(url);
                                 Log.e("AUTH",""+AUTHORIZATION_CODE);
+                                if (AUTHORIZATION_CODE == null)
+                                    Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
                                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                                 TextView userNameTextView = (TextView) findViewById(R.id.username);
                                 TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
@@ -240,6 +239,14 @@ public class HomeActivity extends AppCompatActivity
                 TextView userNameTextView = (TextView) findViewById(R.id.username);
                 TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
                 new logoutPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute();
+
+                CookieManager cookieManager = CookieManager.getInstance();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    cookieManager.removeAllCookies(null);
+                }
+                else {
+                    cookieManager.removeAllCookie();
+                }
                 break;
         }
 

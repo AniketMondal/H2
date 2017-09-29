@@ -51,6 +51,12 @@
         <receiver android:name=".messnotification.DinnerAlarmReceiver"
             android:enabled="true"
             android:process=":remote"/>
+        <receiver android:name=".messnotification.AlarmBootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

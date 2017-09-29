@@ -1,6 +1,8 @@
 package in.ac.iitb.gymkhana.hostel2;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -31,6 +33,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity;
+import in.ac.iitb.gymkhana.hostel2.messnotification.AlarmBootReceiver;
 import in.ac.iitb.gymkhana.hostel2.messnotification.BreakfastAlarmMaker;
 import in.ac.iitb.gymkhana.hostel2.messnotification.DinnerAlarmMaker;
 import in.ac.iitb.gymkhana.hostel2.messnotification.DinnerAlarmReceiver;
@@ -65,6 +68,11 @@ public class WelcomeActivity extends AppCompatActivity {
         LunchAlarmMaker.makeAlarm(getApplicationContext());
         TiffinAlarmMaker.makeAlarm(getApplicationContext());
         DinnerAlarmMaker.makeAlarm(getApplicationContext());
+        ComponentName receiver = new ComponentName(getApplicationContext(), AlarmBootReceiver.class);
+        PackageManager pm = getApplicationContext().getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
 
         TextView tx = (TextView) findViewById(R.id.hostel_name);
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/NaughtySquirrelDemo.ttf");

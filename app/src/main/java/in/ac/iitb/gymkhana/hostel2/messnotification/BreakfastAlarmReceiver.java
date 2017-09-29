@@ -41,6 +41,7 @@ public class BreakfastAlarmReceiver extends BroadcastReceiver {
         try {
             JSONObject jsonObject = new JSONObject(messMenu);
             JSONArray jsonArray = jsonObject.getJSONArray("DAY");
+            Log.e("ARR",jsonArray.toString());
             Calendar now = Calendar.getInstance();
             int day = now.get(Calendar.DAY_OF_WEEK);
             switch (day) {
@@ -66,7 +67,8 @@ public class BreakfastAlarmReceiver extends BroadcastReceiver {
                     menu = jsonArray.getJSONObject(6).getString("BREAKFAST").trim();
                     break;
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {Log.e("EXC","",e);}
+        Log.e("MENU",menu);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pendingIntent);

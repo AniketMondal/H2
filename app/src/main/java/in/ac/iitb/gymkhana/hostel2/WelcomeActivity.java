@@ -31,6 +31,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity;
+import in.ac.iitb.gymkhana.hostel2.messnotification.BreakfastAlarmMaker;
+import in.ac.iitb.gymkhana.hostel2.messnotification.DinnerAlarmMaker;
+import in.ac.iitb.gymkhana.hostel2.messnotification.DinnerAlarmReceiver;
+import in.ac.iitb.gymkhana.hostel2.messnotification.LunchAlarmMaker;
+import in.ac.iitb.gymkhana.hostel2.messnotification.TiffinAlarmMaker;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -47,12 +52,19 @@ public class WelcomeActivity extends AppCompatActivity {
     public static String techGCurl = "https://stab-iitb.org/tech-gc-points-2016";
     public static String sportsGCurl = "https://gymkhana.iitb.ac.in/~sports/index.php?r=events/gc";
 
+    public static String SSO_ACCESS_TOKEN;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+
+        BreakfastAlarmMaker.makeAlarm(getApplicationContext());
+        LunchAlarmMaker.makeAlarm(getApplicationContext());
+        TiffinAlarmMaker.makeAlarm(getApplicationContext());
+        DinnerAlarmMaker.makeAlarm(getApplicationContext());
 
         TextView tx = (TextView) findViewById(R.id.hostel_name);
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/NaughtySquirrelDemo.ttf");

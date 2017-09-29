@@ -4,7 +4,10 @@
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="6dp"
     android:numColumns="2"
-    android:id="@+id/council_grid">
+    android:id="@+id/council_grid"
+    android:horizontalSpacing="6dp"
+    android:verticalSpacing="4dp">
 
 </GridView>

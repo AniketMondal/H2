@@ -21,7 +21,22 @@
     <PreferenceCategory
         android:title="Feedback">
 
+        <Preference
+            android:title="Feedback"
+            android:summary="Fill out the form to report a bug or give some feedback">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://goo.gl/forms/uSKNT1Bf9Ucq3Fgh2" />
+        </Preference>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About">
+
+        <Preference
+            android:title="Hostel 2 App"
+            android:summary="For The Wild Ones\n\nDesigned and Developed by:\nBhavesh Dhingra">
+        </Preference>
 
     </PreferenceCategory>
 

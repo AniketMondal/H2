@@ -41,7 +41,7 @@ public class InfoTechFragment extends Fragment {
         View view = inflater.inflate(R.layout.info_fragment_content, container, false);
 
         TextView infoText = (TextView) view.findViewById(R.id.info_text);
-        infoText.setText("This is tech!!");
+        infoText.setText("Hostel 2 is well equipped for the tech enthusiasts to design and implement their ideas. The tech room is getting better everyday with new improvements and lots of workshops and activities for the hostel inmates are coming soon.");
 
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);

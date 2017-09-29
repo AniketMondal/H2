@@ -41,7 +41,7 @@ public class InfoSportsFragment extends Fragment {
         View view = inflater.inflate(R.layout.info_fragment_content, container, false);
 
         TextView infoText = (TextView) view.findViewById(R.id.info_text);
-        infoText.setText("This is sports!!");
+        infoText.setText("Hostel 2 is located at the epicenter of Gymkhana Grounds, New and Old SAC and other sports complexes, is equipped well with a Footer field, a semi Basketball court, Volleyball court, Badminton court, a cricket pitch and a frisbee field. It nurtures in it sports enthusiasts from sophies to post graduates. Hostel is also facilitated by a lounge that possesses a TT table and carrom boards and also contains a Pool room to add to its versatility. Winner of Sports Cup last year, H2 continues its spirit for this year too.");
 
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);

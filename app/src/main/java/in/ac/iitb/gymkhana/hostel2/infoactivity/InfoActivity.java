@@ -113,8 +113,8 @@ public class InfoActivity extends AppCompatActivity
         @Override
         public Fragment getItem(int position) {
             if (position == 0) return new InfoCultFragment();
-            else if (position == 1) return new InfoTechFragment();
-            else return new InfoSportsFragment();
+            else if (position == 1) return new InfoSportsFragment();
+            else return new InfoTechFragment();
         }
 
         @Override
@@ -125,8 +125,8 @@ public class InfoActivity extends AppCompatActivity
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0) return "Cult";
-            else if (position == 1) return "Tech";
-            else return "Sports";
+            else if (position == 1) return "Sports";
+            else return "Tech";
         }
     }
 

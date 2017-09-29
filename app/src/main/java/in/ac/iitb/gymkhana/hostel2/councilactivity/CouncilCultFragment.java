@@ -31,10 +31,17 @@ public class CouncilCultFragment extends Fragment {
         View view = inflater.inflate(R.layout.council_fragment_grid, container, false);
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
-        members.add(new CouncilMember(R.drawable.logo, "Bhavesh", "Web Secretary", "189", "7696464483"));
-        members.add(new CouncilMember(R.drawable.logo, "Aditya", "Web Secretary", "280", "pta nhi"));
-        members.add(new CouncilMember(R.drawable.logo, "Dhruv", "Cat Secretary", "189", "8454953889"));
-        members.add(new CouncilMember(R.drawable.logo, "Sourabh", "Aalas Secretary", "188", "pta nhi"));
+        members.add(new CouncilMember(R.drawable.logo, "Kaushick VM", "Cultural Councillor", "89", "9004136737"));
+        members.add(new CouncilMember(R.drawable.logo, "Pratyush Sharma", "Social Secretary", "101", "9717223158"));
+        members.add(new CouncilMember(R.drawable.logo, "Souvik Pratap ", "Social Secretary", "11", "8209395292"));
+        members.add(new CouncilMember(R.drawable.logo, "Piyush Gupta", "Music Secretary", "166", "8291474751"));
+        members.add(new CouncilMember(R.drawable.logo, "Nikunj Mohota", "Film & Media Secretary", "234", "9987446795"));
+        members.add(new CouncilMember(R.drawable.logo, "Manas Vhanmane", "Design Secretary", "9", "0"));
+        members.add(new CouncilMember(R.drawable.logo, "Jayasurya Sudakaran", "Design Secretary", "0", "0"));
+        members.add(new CouncilMember(R.drawable.logo, "Bhavya Kachhwaha", "Dance Secretary", "39", "9772039949"));
+        members.add(new CouncilMember(R.drawable.logo, "Karthik Vignesh", "Lit & Speaking Arts Secretary", "266", "7024142215"));
+        members.add(new CouncilMember(R.drawable.logo, "Arpit Shashwat", "Dramatics Secretary", "213", "8291339774"));
+        members.add(new CouncilMember(R.drawable.logo, "Sudhanshu Verma", "Photography & Fine Arts Secretary", "15", "8058750490"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

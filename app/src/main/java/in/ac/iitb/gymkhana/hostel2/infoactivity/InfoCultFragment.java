@@ -41,7 +41,7 @@ public class InfoCultFragment extends Fragment {
         View view = inflater.inflate(R.layout.info_fragment_content, container, false);
 
         TextView infoText = (TextView) view.findViewById(R.id.info_text);
-        infoText.setText("This is cult!!");
+        infoText.setText("Cultural Activities have been an important part of life at Hostel 2. Hostel 2 boasts of having some of the best dancers, musicians, actors, writers, quizzers, speakers, and artists in the institute. Hostel 2 has been in top two positions in Performing Arts Festival a.k.a. PAF for the last few years. The winner of the first Hostel cup and having been positioned fourth in overall general championship last year, H2 continues its path to glory this year too.");
 
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);

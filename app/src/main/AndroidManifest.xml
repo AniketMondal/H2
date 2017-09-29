@@ -3,12 +3,14 @@
     package="in.ac.iitb.gymkhana.hostel2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -31,11 +33,24 @@
         <activity
             android:name=".infoactivity.InfoActivity"
             android:label="@string/title_activity_info"
-            android:theme="@style/AppTheme.NoActionBar.GreyBack" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".settingsactivity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name=".messnotification.BreakfastAlarmReceiver"
+            android:enabled="true"
+            android:process=":remote"/>
+        <receiver android:name=".messnotification.LunchAlarmReceiver"
+            android:enabled="true"
+            android:process=":remote"/>
+        <receiver android:name=".messnotification.TiffinAlarmReceiver"
+            android:enabled="true"
+            android:process=":remote"/>
+        <receiver android:name=".messnotification.DinnerAlarmReceiver"
+            android:enabled="true"
+            android:process=":remote"/>
     </application>
 
 </manifest>

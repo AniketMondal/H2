@@ -1,7 +1,5 @@
 package in.ac.iitb.gymkhana.hostel2.messnotification;
 
-import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -9,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -72,8 +69,8 @@ public class BreakfastAlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.mipmap.logo);
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo));
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
         builder.setContentTitle("Today's Breakfast");
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(menu));
         builder.setContentText(menu);

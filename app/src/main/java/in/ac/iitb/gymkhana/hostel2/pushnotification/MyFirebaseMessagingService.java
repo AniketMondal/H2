@@ -40,8 +40,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.mipmap.logo);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.logo));
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.icon));
         builder.setContentTitle(title);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
         builder.setContentText(message);

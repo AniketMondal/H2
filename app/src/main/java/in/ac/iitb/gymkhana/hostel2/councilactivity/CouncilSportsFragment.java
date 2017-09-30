@@ -31,13 +31,13 @@ public class CouncilSportsFragment extends Fragment {
         View view = inflater.inflate(R.layout.council_fragment_grid, container, false);
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
-        members.add(new CouncilMember(R.drawable.logo, "Badal Priyadarshi", "Sports Councillor", "179", "8828495030"));
-        members.add(new CouncilMember(R.drawable.logo, "Bhadri Narayanan R", "Sports Secretary", "267", "9840588681"));
-        members.add(new CouncilMember(R.drawable.logo, "Sarvind Rankawat", "Sports Secretary", "155", "8291339558"));
-        members.add(new CouncilMember(R.drawable.logo, "Amarjeet Kumar", "Sports Secretary", "233", "8291878589"));
-        members.add(new CouncilMember(R.drawable.logo, "Abhirup Majumdar", "Sports Secretary", "139", "9007035917"));
-        members.add(new CouncilMember(R.drawable.logo, "Jagdeep Dular", "Sports Secretary", "101", "9413006454"));
-        members.add(new CouncilMember(R.drawable.logo, "Devavrat Mahajan", "Sports Secretary", "0", "0"));
+        members.add(new CouncilMember(R.drawable.badal, "Badal Priyadarshi", "Sports Councillor", "179", "8828495030"));
+        members.add(new CouncilMember(R.drawable.bhadri, "Bhadri Narayanan R", "Sports Secretary", "267", "9840588681"));
+        members.add(new CouncilMember(R.drawable.sarvind, "Sarvind Rankawat", "Sports Secretary", "155", "8291339558"));
+        members.add(new CouncilMember(R.drawable.amarjeet, "Amarjeet Kumar", "Sports Secretary", "233", "8291878589"));
+        members.add(new CouncilMember(R.drawable.abhirup, "Abhirup Majumdar", "Sports Secretary", "139", "9007035917"));
+        members.add(new CouncilMember(R.drawable.jagdeep, "Jagdeep Dular", "Sports Secretary", "101", "9413006454"));
+        members.add(new CouncilMember(R.drawable.devavrat, "Devavrat Mahajan", "Sports Secretary", "0", "0"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

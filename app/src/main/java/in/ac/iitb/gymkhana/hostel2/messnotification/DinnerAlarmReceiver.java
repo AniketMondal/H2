@@ -66,8 +66,8 @@ public class DinnerAlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.mipmap.logo);
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo));
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
         builder.setContentTitle("Today's Dinner");
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(menu));
         builder.setContentText(menu);

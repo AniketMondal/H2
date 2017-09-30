@@ -46,7 +46,7 @@ public class InfoCultFragment extends Fragment {
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);
 
-        CarouselAdapter carouselAdapter = new CarouselAdapter(getContext(),  new Integer[]{R.mipmap.abc1, R.mipmap.abc2, R.mipmap.abc3, R.mipmap.abc4, R.mipmap.abc5});
+        CarouselAdapter carouselAdapter = new CarouselAdapter(getContext(),  new Integer[]{R.drawable.c1, R.drawable.c2, R.drawable.c3, R.drawable.c4});
         carouselViewPager.setAdapter(carouselAdapter);
 
         dotscount = carouselAdapter.getCount();

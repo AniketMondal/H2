@@ -12,6 +12,7 @@
             android:id="@+id/nav_info"
             android:title="Hostel Information" />
 
+        <!--
         <item
             android:id="@+id/nav_kfc"
             android:title="KFC Portal" />
@@ -23,6 +24,7 @@
         <item
             android:id="@+id/nav_lan"
             android:title="LAN Complaint Portal" />
+        -->
 
         <item
             android:id="@+id/nav_settings"

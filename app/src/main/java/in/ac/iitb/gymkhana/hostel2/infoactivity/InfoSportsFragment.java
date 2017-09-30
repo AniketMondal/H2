@@ -46,7 +46,7 @@ public class InfoSportsFragment extends Fragment {
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);
 
-        CarouselAdapter carouselAdapter = new CarouselAdapter(getContext(),  new Integer[]{R.mipmap.abc1, R.mipmap.abc2, R.mipmap.abc3, R.mipmap.abc4, R.mipmap.abc5});
+        CarouselAdapter carouselAdapter = new CarouselAdapter(getContext(),  new Integer[]{R.drawable.s1, R.drawable.s2, R.drawable.s3, R.drawable.s4, R.drawable.s5});
         carouselViewPager.setAdapter(carouselAdapter);
 
         dotscount = carouselAdapter.getCount();

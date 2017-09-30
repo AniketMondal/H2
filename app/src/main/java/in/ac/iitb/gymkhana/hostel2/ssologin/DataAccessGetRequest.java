@@ -13,19 +13,20 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 
-import in.ac.iitb.gymkhana.hostel2.R;
+import javax.net.ssl.HttpsURLConnection;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.SSO_ACCESS_TOKEN;
+import in.ac.iitb.gymkhana.hostel2.R;
+import in.ac.iitb.gymkhana.hostel2.WelcomeActivity;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by bhavesh on 28/09/17.
  */
 
-public class logoutPostRequest extends AsyncTask<String,Void,String> {
+public class DataAccessGetRequest extends AsyncTask<String,Void,String> {
 
 
     String url;
@@ -36,7 +37,7 @@ public class logoutPostRequest extends AsyncTask<String,Void,String> {
     TextView ldapIDTextView;
     Context context;
 
-    public logoutPostRequest(NavigationView navigationView, TextView userNameTextView, TextView ldapIDTextView, Context context){
+    public DataAccessGetRequest(NavigationView navigationView, TextView userNameTextView, TextView ldapIDTextView, Context context){
         this.navigationView = navigationView;
         this.userNameTextView = userNameTextView;
         this.ldapIDTextView = ldapIDTextView;
@@ -45,32 +46,25 @@ public class logoutPostRequest extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        url = "https://gymkhana.iitb.ac.in/sso/oauth/revoke_token/";
+        url = "https://gymkhana.iitb.ac.in/sso/user/api/user/?fields=first_name,last_name,username";
         try {
             URL = new URL(url);
         } catch (Exception e) { }
     }
 
     @Override
-    protected String doInBackground(String... key) {
+    protected String doInBackground(String... access) {
         HttpsURLConnection conn;
         StringBuffer response = new StringBuffer();
 
         try {
             conn = (HttpsURLConnection) URL.openConnection();
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod("GET");
             conn.setRequestProperty("Host", "gymkhana.iitb.ac.in");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            conn.setRequestProperty("Authorization", "Bearer "+access[0]);
 
+            // Send get request
 
-            String urlParameters = "token="+SSO_ACCESS_TOKEN+"&client_id=XWdEl57bq3NkT1XJac4uDKXOlURJl0yIreldL8U3&client_secret=ydDAeGkntYpK2Nb46K2KuQ1xMnr6c0XEuTf5gS8TD2AuAFhx7JQSamVJV9mT2Pm4JspgRjOjELKEXOwZX54kL5IpX02Wgskyqe2FZi7KeOR5kHareA12ZeU6N3NfZjJm&token_type_hint=access_token";
-
-            // Send post request
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
@@ -81,21 +75,24 @@ public class logoutPostRequest extends AsyncTask<String,Void,String> {
             }
             in.close();
             conn.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { }
 
         return response.toString();
     }
 
     @Override
     protected void onPostExecute(String s) {
-        Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_logout).setVisible(false);
-        nav_Menu.findItem(R.id.nav_login).setVisible(true);
-        userNameTextView.setText("User Name");
-        ldapIDTextView.setText("LDAP ID");
-        Toast.makeText(context,"Logout Successful",Toast.LENGTH_SHORT).show();
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(s);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_login).setVisible(false);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(true);
+            userNameTextView.setText(jsonObject.getString("first_name") + " " + jsonObject.getString("last_name"));
+            ldapIDTextView.setText(jsonObject.getString("username"));
+            Toast.makeText(context,"Login Successful",Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {}
     }
 
 }

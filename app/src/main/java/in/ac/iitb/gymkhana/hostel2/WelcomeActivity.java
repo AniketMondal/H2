@@ -64,6 +64,10 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.welcome_activity);
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
+        TextView tx = (TextView) findViewById(R.id.hostel_name);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/NaughtySquirrelDemo.ttf");
+        tx.setTypeface(custom_font);
+
         BreakfastAlarmMaker.makeAlarm(getApplicationContext());
         LunchAlarmMaker.makeAlarm(getApplicationContext());
         TiffinAlarmMaker.makeAlarm(getApplicationContext());
@@ -73,10 +77,6 @@ public class WelcomeActivity extends AppCompatActivity {
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
-
-        TextView tx = (TextView) findViewById(R.id.hostel_name);
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/NaughtySquirrelDemo.ttf");
-        tx.setTypeface(custom_font);
 
         getMenu();
         getNews();

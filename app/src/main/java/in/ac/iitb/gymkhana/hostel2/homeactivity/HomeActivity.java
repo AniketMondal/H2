@@ -47,8 +47,8 @@ import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.councilactivity.CouncilActivity;
 import in.ac.iitb.gymkhana.hostel2.infoactivity.InfoActivity;
 import in.ac.iitb.gymkhana.hostel2.settingsactivity.SettingsActivity;
-import in.ac.iitb.gymkhana.hostel2.ssologin.loginPostRequest;
-import in.ac.iitb.gymkhana.hostel2.ssologin.logoutPostRequest;
+import in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest;
+import in.ac.iitb.gymkhana.hostel2.ssologin.LogoutPostRequest;
 
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getCalendar;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getMenu;
@@ -57,7 +57,7 @@ import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.menuFile;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.news;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.newsFile;
-import static in.ac.iitb.gymkhana.hostel2.ssologin.loginPostRequest.getQueryMap;
+import static in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest.getQueryMap;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,7 +101,14 @@ public class HomeActivity extends AppCompatActivity
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 TextView userNameTextView = (TextView) findViewById(R.id.username);
                 TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
-                new logoutPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute();
+                new LogoutPostRequest(navigationView, userNameTextView, ldapIDTextView, getApplicationContext()).execute();
+
+                CookieManager cookieManager = CookieManager.getInstance();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    cookieManager.removeAllCookies(null);
+                } else {
+                    cookieManager.removeAllCookie();
+                }
                 super.onBackPressed();
             }
             else{
@@ -195,8 +202,12 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(new Intent().setClass(this, InfoActivity.class));
                 finish();
                 break;
-            case R.id.nav_login:
-                AlertDialog.Builder loginDialogBuilder = new AlertDialog.Builder(this);
+            case R.id.nav_login: {
+                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                final TextView userNameTextView = (TextView) findViewById(R.id.username);
+                final TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
+                final Context context = this;
+                AlertDialog.Builder loginDialogBuilder = new AlertDialog.Builder(context);
                 View loginView = getLayoutInflater().inflate(R.layout.login_layout, null);
                 loginDialogBuilder.setView(loginView);
                 EditText loginEdittext = (EditText)  loginView.findViewById(R.id.login_edittext);
@@ -217,12 +228,45 @@ public class HomeActivity extends AppCompatActivity
                             else{
                                 String AUTHORIZATION_CODE = getQueryMap(url);
                                 Log.e("AUTH",""+AUTHORIZATION_CODE);
-                                if (AUTHORIZATION_CODE == null)
-                                    Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
-                                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                                TextView userNameTextView = (TextView) findViewById(R.id.username);
-                                TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
-                                new loginPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute(AUTHORIZATION_CODE);
+                                if (AUTHORIZATION_CODE == null) {
+                                    loginDialog.dismiss();
+                                    AlertDialog.Builder loginDialogBuilder = new AlertDialog.Builder(context);
+                                    View loginView = getLayoutInflater().inflate(R.layout.login_layout, null);
+                                    loginDialogBuilder.setView(loginView);
+                                    EditText loginEdittext = (EditText)  loginView.findViewById(R.id.login_edittext);
+                                    loginEdittext.requestFocus();
+                                    final Dialog loginDialog2 = loginDialogBuilder.create();
+                                    loginDialog2.show();
+                                    loginView.requestFocus();
+                                    WebView loginWebView = (WebView) loginView.findViewById(R.id.login_webview);
+                                    loginWebView.loadUrl("https://gymkhana.iitb.ac.in/sso/oauth/authorize/?client_id=XWdEl57bq3NkT1XJac4uDKXOlURJl0yIreldL8U3&response_type=code&scope=ldap profile&redirect_uri=http://www.google.co.in/&state=some_state");
+                                    loginWebView.setWebViewClient(new WebViewClient() {
+                                        @Override
+                                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                            view.loadUrl(url);
+                                            if(url.contains("http://www.google.co.in/")){
+                                                if(url.contains("error=access_denied")){
+                                                    Toast.makeText(getApplicationContext(),"Authorization Unsuccessful",Toast.LENGTH_SHORT).show();
+                                                }
+                                                else{
+                                                    String AUTHORIZATION_CODE = getQueryMap(url);
+                                                    Log.e("AUTH",""+AUTHORIZATION_CODE);
+                                                    if (AUTHORIZATION_CODE == null) {
+                                                        Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    new LoginPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute(AUTHORIZATION_CODE);
+                                                }
+                                                loginDialog2.dismiss();
+                                            }
+                                            return true;
+                                        }
+                                        @Override
+                                        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                                            handler.proceed(); // Ignore SSL certificate errors
+                                        }
+                                    });
+                                }
+                                new LoginPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute(AUTHORIZATION_CODE);
                             }
                             loginDialog.dismiss();
                         }
@@ -234,20 +278,21 @@ public class HomeActivity extends AppCompatActivity
                     }
                 });
                 break;
-            case R.id.nav_logout:
+            }
+            case R.id.nav_logout: {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 TextView userNameTextView = (TextView) findViewById(R.id.username);
                 TextView ldapIDTextView = (TextView) findViewById(R.id.ldapid);
-                new logoutPostRequest(navigationView, userNameTextView,ldapIDTextView, getApplicationContext()).execute();
+                new LogoutPostRequest(navigationView, userNameTextView, ldapIDTextView, getApplicationContext()).execute();
 
                 CookieManager cookieManager = CookieManager.getInstance();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     cookieManager.removeAllCookies(null);
-                }
-                else {
+                } else {
                     cookieManager.removeAllCookie();
                 }
                 break;
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

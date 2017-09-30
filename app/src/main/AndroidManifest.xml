@@ -39,6 +39,7 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
 
+
         <receiver android:name=".messnotification.BreakfastAlarmReceiver"
             android:enabled="true"
             android:process=":remote"/>
@@ -57,6 +58,14 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
+
+
+        <service android:name=".pushnotification.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

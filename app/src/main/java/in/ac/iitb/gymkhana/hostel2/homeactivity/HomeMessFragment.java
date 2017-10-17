@@ -16,12 +16,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItem;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItemAdapter;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
+import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 21/09/17.
@@ -38,7 +39,7 @@ public class HomeMessFragment extends Fragment {
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
         try {
-            JSONObject complete = new JSONObject(messMenu);
+            JSONObject complete = new JSONObject(cache.getMenu());
             JSONArray jsonArray = complete.getJSONArray("DAY");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject menuItem = jsonArray.getJSONObject(i);
@@ -51,7 +52,7 @@ public class HomeMessFragment extends Fragment {
                 menu.append(menuItem.getString("TIFFIN").trim());
                 menu.append("\n\nDINNER:\n");
                 menu.append(menuItem.getString("DINNER").trim());
-                menuList.add(new ExpandableItem(days[i], menu.toString()));
+                menuList.add(new ExpandableItem(days[i], menu.toString(), expanded(i)));
             }
         } catch (Exception e) {}
 
@@ -79,6 +80,19 @@ public class HomeMessFragment extends Fragment {
         });
 
         return view;
+    }
+
+    boolean expanded(int i) {
+        Calendar now = Calendar.getInstance();
+        int day = now.get(Calendar.DAY_OF_WEEK);
+        if (i == 0 && day == Calendar.MONDAY) return true;
+        if (i == 1 && day == Calendar.TUESDAY) return true;
+        if (i == 2 && day == Calendar.WEDNESDAY) return true;
+        if (i == 3 && day == Calendar.THURSDAY) return true;
+        if (i == 4 && day == Calendar.FRIDAY) return true;
+        if (i == 5 && day == Calendar.SATURDAY) return true;
+        if (i == 6 && day == Calendar.SUNDAY) return true;
+        return false;
     }
 
 }

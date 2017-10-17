@@ -1,6 +1,7 @@
 package in.ac.iitb.gymkhana.hostel2;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -43,11 +44,9 @@ import in.ac.iitb.gymkhana.hostel2.messnotification.TiffinAlarmMaker;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    public static String messMenu;
-    public static String news;
+    public static CacheManager cache;
+
     public static Bitmap calendar;
-    public static File menuFile;
-    public static File newsFile;
 
     public static String menuURL = "https://gymkhana.iitb.ac.in/~hostel2/menu_app.json";
     public static String newsURL = "https://gymkhana.iitb.ac.in/~hostel2/appdata/news_app.json";
@@ -64,6 +63,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        cache = new CacheManager(getApplicationContext());
 
         TextView tx = (TextView) findViewById(R.id.hostel_name);
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/NaughtySquirrelDemo.ttf");
@@ -79,49 +79,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
 
-        getMenu();
+        getMenu(this);
         getNews();
         getCalendar();
-        menuFile = new File(getBaseContext().getCacheDir().getPath() + "/" + "menuFile.txt");
-        newsFile = new File(getBaseContext().getCacheDir().getPath() + "/" + "newsFile.txt");
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (messMenu == null || news == null) {
-                    Toast.makeText(getApplicationContext(), "Please check your internet conection\nLoading cached data", Toast.LENGTH_LONG).show();
-                    String strLine;
-                    StringBuilder strBuilder;
-                    try {
-                        strLine = "";
-                        strBuilder = new StringBuilder();
-                        BufferedReader bReader = new BufferedReader(new FileReader(menuFile));
-                        while((strLine=bReader.readLine()) != null  ){
-                            strBuilder.append(strLine+"\n");
-                        }
-                        messMenu = strBuilder.toString();
-                    } catch (Exception e) {}
-                    try {
-                        strLine = "";
-                        strBuilder = new StringBuilder();
-                        BufferedReader bReader = new BufferedReader(new FileReader(newsFile));
-                        while((strLine=bReader.readLine()) != null  ){
-                            strBuilder.append(strLine+"\n");
-                        }
-                        news = strBuilder.toString();
-                    } catch (Exception e) {}
-                } else {
-                    FileWriter writer;
-                    try {
-                        writer = new FileWriter(menuFile);
-                        writer.write(messMenu);
-                        writer.close();
-                        writer = new FileWriter(newsFile);
-                        writer.write(news);
-                        writer.close();
-                    } catch (IOException e) { }
-                }
                 startActivity(new Intent().setClass(WelcomeActivity.this, HomeActivity.class));
                 finish();
             }
@@ -133,6 +98,11 @@ public class WelcomeActivity extends AppCompatActivity {
     static class GetMenu extends AsyncTask<Void,Void,String> {
 
         String url;
+        Context context;
+
+        public GetMenu(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -182,12 +152,16 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            messMenu = s;
+            if (s == null) {
+                Toast.makeText(context, "Please check your internet conection\nLoading cached data", Toast.LENGTH_LONG).show();
+            } else {
+                cache.addMenu(s);
+            }
         }
     }
 
-    public static void getMenu() {
-        new GetMenu().execute();
+    public static void getMenu(Context context) {
+        new GetMenu(context).execute();
     }
 
     static class GetNews extends AsyncTask<Void,Void,String> {
@@ -242,7 +216,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            news = s;
+            if (s == null) {
+            } else {
+                cache.addNews(s);
+            }
         }
     }
 

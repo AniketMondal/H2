@@ -40,13 +40,6 @@ import in.ac.iitb.gymkhana.hostel2.infoactivity.InfoActivity;
 import in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest;
 import in.ac.iitb.gymkhana.hostel2.ssologin.LogoutPostRequest;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getCalendar;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getMenu;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getNews;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.menuFile;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.news;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.newsFile;
 import static in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest.getQueryMap;
 
 public class SettingsActivity extends AppCompatActivity

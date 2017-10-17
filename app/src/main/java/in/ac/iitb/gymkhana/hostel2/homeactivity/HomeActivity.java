@@ -8,6 +8,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -28,19 +29,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import in.ac.iitb.gymkhana.hostel2.R;
@@ -50,13 +50,10 @@ import in.ac.iitb.gymkhana.hostel2.settingsactivity.SettingsActivity;
 import in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest;
 import in.ac.iitb.gymkhana.hostel2.ssologin.LogoutPostRequest;
 
+import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getCalendar;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getMenu;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.getNews;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.menuFile;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.news;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.newsFile;
 import static in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest.getQueryMap;
 
 public class HomeActivity extends AppCompatActivity
@@ -133,45 +130,12 @@ public class HomeActivity extends AppCompatActivity
             progress.setMessage("Refreshing");
             progress.setIndeterminate(true);
             progress.show();
-            getMenu();
+            getMenu(getApplicationContext());
             getNews();
             getCalendar();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (messMenu == null || news == null) {
-                        Toast.makeText(getApplicationContext(), "Please check your internet conection\nLoading cached data", Toast.LENGTH_LONG).show();
-                        String strLine;
-                        StringBuilder strBuilder;
-                        try {
-                            strLine = "";
-                            strBuilder = new StringBuilder();
-                            BufferedReader bReader = new BufferedReader(new FileReader(menuFile));
-                            while((strLine=bReader.readLine()) != null  ){
-                                strBuilder.append(strLine+"\n");
-                            }
-                            messMenu = strBuilder.toString();
-                        } catch (Exception e) {}
-                        try {
-                            strLine = "";
-                            strBuilder = new StringBuilder();
-                            BufferedReader bReader = new BufferedReader(new FileReader(newsFile));
-                            while((strLine=bReader.readLine()) != null  ){
-                                strBuilder.append(strLine+"\n");
-                            }
-                            news = strBuilder.toString();
-                        } catch (Exception e) {}
-                    } else {
-                        FileWriter writer;
-                        try {
-                            writer = new FileWriter(menuFile);
-                            writer.write(messMenu);
-                            writer.close();
-                            writer = new FileWriter(newsFile);
-                            writer.write(news);
-                            writer.close();
-                        } catch (IOException e) { }
-                    }
                     startActivity(getIntent());
                     finish();
                 }
@@ -338,14 +302,17 @@ public class HomeActivity extends AppCompatActivity
 
         private String title;
         private String content;
+        private boolean expanded;
 
-        public ExpandableItem(String title, String content) {
+        public ExpandableItem(String title, String content, Boolean expanded) {
             this.title = title;
             this.content = content;
+            this.expanded = expanded;
         }
 
         public String getTitle() { return title; }
         public String getContent() { return content; }
+        public boolean getExpanded() { return expanded; }
     }
 
     public static class ExpandableItemAdapter extends ArrayAdapter<ExpandableItem> {
@@ -371,6 +338,12 @@ public class HomeActivity extends AppCompatActivity
 
             title.setText(currentItem.getTitle());
             content.setText(currentItem.getContent());
+
+            if (currentItem.getExpanded()) {
+                ImageView arrow = (ImageView) listItemView.findViewById(R.id.expandable_arrow);
+                content.setVisibility(View.VISIBLE);
+                arrow.setImageResource(R.drawable.up_arrow);
+            }
 
             return listItemView;
         }

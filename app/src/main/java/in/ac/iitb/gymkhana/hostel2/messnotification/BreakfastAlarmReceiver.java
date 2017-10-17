@@ -19,7 +19,7 @@ import java.util.Calendar;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.WelcomeActivity;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
+import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 29/09/17.
@@ -33,10 +33,9 @@ public class BreakfastAlarmReceiver extends BroadcastReceiver {
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         String menu = null;
         try {
-            JSONObject jsonObject = new JSONObject(messMenu);
+            JSONObject jsonObject = new JSONObject(cache.getMenu());
             JSONArray jsonArray = jsonObject.getJSONArray("DAY");
             Log.e("ARR",jsonArray.toString());
             Calendar now = Calendar.getInstance();

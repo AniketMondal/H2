@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ import java.util.Calendar;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.WelcomeActivity;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.messMenu;
+import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 29/09/17.
@@ -35,7 +36,7 @@ public class DinnerAlarmReceiver extends BroadcastReceiver {
 
         String menu = null;
         try {
-            JSONObject jsonObject = new JSONObject(messMenu);
+            JSONObject jsonObject = new JSONObject(cache.getMenu());
             JSONArray jsonArray = jsonObject.getJSONArray("DAY");
             Calendar now = Calendar.getInstance();
             int day = now.get(Calendar.DAY_OF_WEEK);
@@ -78,7 +79,6 @@ public class DinnerAlarmReceiver extends BroadcastReceiver {
 
         if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("mess", true))
             notificationManager.notify(101, builder.build());
-
 
     }
 }

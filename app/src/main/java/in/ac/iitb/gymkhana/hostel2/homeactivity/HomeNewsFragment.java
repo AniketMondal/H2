@@ -21,7 +21,7 @@ import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItem;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItemAdapter;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.news;
+import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 21/09/17.
@@ -37,11 +37,11 @@ public class HomeNewsFragment extends Fragment {
         final ArrayList<ExpandableItem> newsList = new ArrayList<ExpandableItem>();
 
         try {
-            JSONObject complete = new JSONObject(news);
+            JSONObject complete = new JSONObject(cache.getNews());
             JSONArray jsonArray = complete.getJSONArray("NEWS");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject newsItem = jsonArray.getJSONObject(i);
-                newsList.add(new ExpandableItem(newsItem.getString("BRIEF"), newsItem.getString("CONTENT")));
+                newsList.add(new ExpandableItem(newsItem.getString("BRIEF"), newsItem.getString("CONTENT"), false));
             }
         } catch (Exception e) {}
 

@@ -20,6 +20,8 @@ public class LunchAlarmMaker {
         lunchTime.set(Calendar.HOUR_OF_DAY,12);
         lunchTime.set(Calendar.MINUTE,30);
         lunchTime.set(Calendar.SECOND,0);
+        if (Calendar.getInstance().after(lunchTime))
+            lunchTime.add(Calendar.DATE, 1);
 
         Intent alarmIntent = new Intent(context, LunchAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 102, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);

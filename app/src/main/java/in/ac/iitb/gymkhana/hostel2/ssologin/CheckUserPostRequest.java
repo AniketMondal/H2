@@ -3,10 +3,16 @@ package in.ac.iitb.gymkhana.hostel2.ssologin;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.webkit.CookieManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -15,8 +21,6 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -25,14 +29,16 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import in.ac.iitb.gymkhana.hostel2.R;
+
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.SSO_ACCESS_TOKEN;
 
 
 /**
- * Created by bhavesh on 28/09/17.
+ * Created by bhavesh on 27/11/17.
  */
 
-public class LoginPostRequest extends AsyncTask<String,Void,String>  {
+public class CheckUserPostRequest extends AsyncTask<String,Void,String> {
 
     String url;
     URL URL;
@@ -43,17 +49,24 @@ public class LoginPostRequest extends AsyncTask<String,Void,String>  {
     Activity activity;
     ProgressDialog progress;
 
-    public LoginPostRequest(NavigationView navigationView, TextView userNameTextView, TextView ldapIDTextView, Activity activity, ProgressDialog progress){
+    String name;
+    String ldapid;
+    String rollno;
+
+    public CheckUserPostRequest(NavigationView navigationView, TextView userNameTextView, TextView ldapIDTextView, Activity activity, ProgressDialog progress, String name, String ldapid, String rollno){
         this.navigationView = navigationView;
         this.userNameTextView = userNameTextView;
         this.ldapIDTextView = ldapIDTextView;
         this.activity = activity;
         this.progress = progress;
+        this.name = name;
+        this.ldapid = ldapid;
+        this.rollno = rollno;
     }
 
     @Override
     protected void onPreExecute() {
-        url = "https://gymkhana.iitb.ac.in/sso/oauth/token/";
+        url = "https://gymkhana.iitb.ac.in/~hostel2/appdata/checkuser.php";
         try {
             URL = new URL(url);
         } catch (Exception e) { }
@@ -89,18 +102,10 @@ public class LoginPostRequest extends AsyncTask<String,Void,String>  {
 
             conn = (HttpsURLConnection) URL.openConnection();
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Host", "gymkhana.iitb.ac.in");
-            conn.setRequestProperty("Authorization", "Basic WFdkRWw1N2JxM05rVDFYSmFjNHVES1hPbFVSSmwweUlyZWxkTDhVMzp5ZERBZUdrbnRZcEsyTmI0NksyS3VRMXhNbnI2YzBYRXVUZjVnUzhURDJBdUFGaHg3SlFTYW1WSlY5bVQyUG00SnNwZ1JqT2pFTEtFWE93Wlg1NGtMNUlwWDAyV2dza3lxZTJGWmk3S2VPUjVrSGFyZUExMlplVTZOM05mWmpKbQ==");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-
-
-            String urlParameters = "code=" + key[0] + "&redirect_uri=http://www.google.co.in/&grant_type=authorization_code";
-
-            // Send post request
+            String urlParameters = "rollno="+rollno;
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
             wr.writeBytes(urlParameters);
-            wr.flush();
             wr.close();
 
             BufferedReader in = new BufferedReader(
@@ -119,27 +124,44 @@ public class LoginPostRequest extends AsyncTask<String,Void,String>  {
 
     @Override
     protected void onPostExecute(String s) {
-        JSONObject jsonObject;
-        try {
-            jsonObject = new JSONObject(s);
-            Log.e("POST JSON",""+jsonObject.toString());
-            SSO_ACCESS_TOKEN = jsonObject.getString("access_token");
-            Log.e("ACCESS",""+SSO_ACCESS_TOKEN);
-            new DataAccessGetRequest(navigationView, userNameTextView,ldapIDTextView,activity,progress).execute(SSO_ACCESS_TOKEN);
-        } catch (Exception e) {}
-    }
+        if (s == null) {
+            CookieManager cookieManager = CookieManager.getInstance();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cookieManager.removeAllCookies(null);
+            } else {
+                cookieManager.removeAllCookie();
+            }
+            progress.dismiss();
+            Toast.makeText(activity.getApplicationContext(),"Unable to Login",Toast.LENGTH_SHORT).show();
+        } else if (s.equals("True")) {
+            SessionManager session = new SessionManager(activity.getApplicationContext());
+            session.createLoginSession(name, ldapid, rollno);
 
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_login).setVisible(false);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(true);
+            userNameTextView.setText(name);
+            ldapIDTextView.setText(ldapid);
+            progress.dismiss();
+            Toast.makeText(activity.getApplicationContext(),"Login Successful",Toast.LENGTH_SHORT).show();
+        } else {
+            progress.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setMessage(s);
+            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-    public static String getQueryMap(String query)
-    {
-        String[] params = query.split("&");
-        Map<String, String> map = new HashMap<String, String>();
-        for (String param : params)
-        {
-            String name = param.split("=")[0];
-            String value = param.split("=")[1];
-            map.put(name, value);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            CookieManager cookieManager = CookieManager.getInstance();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cookieManager.removeAllCookies(null);
+            } else {
+                cookieManager.removeAllCookie();
+            }
         }
-        return map.get("code");
     }
 }

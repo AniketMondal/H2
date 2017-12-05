@@ -1,12 +1,14 @@
 package in.ac.iitb.gymkhana.hostel2.infoactivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,11 +87,26 @@ public class InfoSportsFragment extends Fragment {
                 gcWebView.getSettings().setJavaScriptEnabled(true);
                 gcWebView.setWebViewClient(new WebViewClient() {
                     public void onPageFinished(WebView view, String url) {
-                        progress.hide();
+                        progress.dismiss();
                     }
                     @Override
-                    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                        handler.proceed(); // Ignore SSL certificate errors
+                    public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Using non-IITB network can be insecure. Proceed?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                handler.proceed();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                handler.cancel();
+                            }
+                        });
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                 });
                 progress=new ProgressDialog(getActivity());

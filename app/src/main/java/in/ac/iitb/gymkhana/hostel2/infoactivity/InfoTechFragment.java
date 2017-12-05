@@ -1,12 +1,14 @@
 package in.ac.iitb.gymkhana.hostel2.infoactivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,7 @@ public class InfoTechFragment extends Fragment {
         View view = inflater.inflate(R.layout.info_fragment_content, container, false);
 
         TextView infoText = (TextView) view.findViewById(R.id.info_text);
-        infoText.setText("Hostel 2 is well equipped for the tech enthusiasts to design and implement their ideas. The tech room is getting better everyday with new improvements and lots of workshops and activities for the hostel inmates are coming soon.");
+        infoText.setText("Hostel 2 has a tremendous Tech culture among the hostel inmates.  Tech room is going through a complete transformation. It will be well furnished and be equipped with all the basic and electrical and mechanical tools very soon.  Various tech related workshops and activities like intra hostel GCs are conducted regularly in the hostel.  Hostel two stood 2nd in the tech GC 2015-16. With the support and participation of enthusiastic hostel inmates in Tech GCs, we hope to do even better than 2015-16.");
 
         carouselViewPager = (ViewPager) view.findViewById(R.id.carousel_viewpager);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.carousel_dots);
@@ -85,11 +87,26 @@ public class InfoTechFragment extends Fragment {
                 gcWebView.getSettings().setJavaScriptEnabled(true);
                 gcWebView.setWebViewClient(new WebViewClient() {
                     public void onPageFinished(WebView view, String url) {
-                        progress.hide();
+                        progress.dismiss();
                     }
                     @Override
-                    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                        handler.proceed(); // Ignore SSL certificate errors
+                    public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Using non-IITB network can be insecure. Proceed?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                handler.proceed();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                handler.cancel();
+                            }
+                        });
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                 });
                 progress=new ProgressDialog(getActivity());

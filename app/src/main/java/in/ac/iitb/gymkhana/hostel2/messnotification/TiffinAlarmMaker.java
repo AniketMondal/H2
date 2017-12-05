@@ -20,8 +20,10 @@ public class TiffinAlarmMaker {
         tiffinTime.set(Calendar.HOUR_OF_DAY,16);
         tiffinTime.set(Calendar.MINUTE,30);
         tiffinTime.set(Calendar.SECOND,0);
+        if (Calendar.getInstance().after(tiffinTime))
+            tiffinTime.add(Calendar.DATE, 1);
 
-        Intent alarmIntent = new Intent(context, TiffinAlarmMaker.class);
+        Intent alarmIntent = new Intent(context, TiffinAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 103, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

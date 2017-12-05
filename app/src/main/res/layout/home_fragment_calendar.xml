@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Monthly Calendar"
+        android:textAllCaps="true"
+        android:gravity="center_horizontal"
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="#333333"

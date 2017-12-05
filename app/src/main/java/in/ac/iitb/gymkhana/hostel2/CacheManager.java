@@ -9,14 +9,15 @@ import android.content.SharedPreferences;
 
 public class CacheManager {
 
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    Context context;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Context context;
 
     private static final String PREF_NAME = "MyCache";
 
     private static final String MENU = "menu";
-    public static final String NEWS = "news";
+    private static final String NEWS = "news";
+    private static final String TIME = "time";
 
     public CacheManager(Context context) {
         this.context = context;
@@ -34,12 +35,21 @@ public class CacheManager {
         editor.commit();
     }
 
+    public void addTime(String time){
+        editor.putString(TIME, time);
+        editor.commit();
+    }
+
     public String getMenu() {
         return pref.getString(MENU, null);
     }
 
     public String getNews() {
         return pref.getString(NEWS, null);
+    }
+
+    public String getTime() {
+        return pref.getString(TIME, null);
     }
 
 }

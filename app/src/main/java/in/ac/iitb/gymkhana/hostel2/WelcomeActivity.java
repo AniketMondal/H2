@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.X509Certificate;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -52,7 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public static String newsURL = "https://gymkhana.iitb.ac.in/~hostel2/appdata/news_app.json";
     public static String calURL = "https://gymkhana.iitb.ac.in/~hostel2/appdata/calendar.jpg";
     public static String cultGCurl = "https://gymkhana.iitb.ac.in/~cultural/index.php?key1=arch&key2=gc";
-    public static String techGCurl = "https://stab-iitb.org/tech-gc-points-2016";
+    public static String techGCurl = "http://stab-iitb.org/tech-gcrankings-2016-17";
     public static String sportsGCurl = "https://gymkhana.iitb.ac.in/~sports/index.php?r=events/gc";
 
     public static String SSO_ACCESS_TOKEN;
@@ -124,7 +127,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 sc.init(null, trustAllCerts, new java.security.SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
                 HostnameVerifier allHostsValid = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {return true;}
+                    public boolean verify(String hostname, SSLSession session) {
+                        if (hostname.contains("iitb.ac.in"))
+                            return true;
+                        else
+                            return false;
+                    }
                 };
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                 // ------------------END------------------
@@ -156,6 +164,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 Toast.makeText(context, "Please check your internet conection\nLoading cached data", Toast.LENGTH_LONG).show();
             } else {
                 cache.addMenu(s);
+                String[] now = Calendar.getInstance().getTime().toString().split(" ");
+                cache.addTime(now[1] + " " + now[2] + " " + now[3]);
             }
         }
     }
@@ -188,7 +198,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 sc.init(null, trustAllCerts, new java.security.SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
                 HostnameVerifier allHostsValid = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {return true;}
+                    public boolean verify(String hostname, SSLSession session) {
+                        if (hostname.contains("iitb.ac.in"))
+                            return true;
+                        else
+                            return false;
+                    }
                 };
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                 // ------------------END------------------
@@ -251,7 +266,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 sc.init(null, trustAllCerts, new java.security.SecureRandom());
                 HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
                 HostnameVerifier allHostsValid = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {return true;}
+                    public boolean verify(String hostname, SSLSession session) {
+                        if (hostname.contains("iitb.ac.in"))
+                            return true;
+                        else
+                            return false;
+                    }
                 };
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                 // ------------------END------------------

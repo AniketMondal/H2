@@ -12,19 +12,9 @@
             android:id="@+id/nav_info"
             android:title="Hostel Information" />
 
-        <!--
         <item
-            android:id="@+id/nav_kfc"
-            android:title="KFC Portal" />
-
-        <item
-            android:id="@+id/nav_rebate"
-            android:title="Mess Rebate Portal" />
-
-        <item
-            android:id="@+id/nav_lan"
-            android:title="LAN Complaint Portal" />
-        -->
+            android:id="@+id/nav_portals"
+            android:title="Portals" />
 
         <item
             android:id="@+id/nav_settings"

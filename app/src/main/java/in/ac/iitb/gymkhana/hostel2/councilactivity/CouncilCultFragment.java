@@ -36,10 +36,10 @@ public class CouncilCultFragment extends Fragment {
         members.add(new CouncilMember(R.drawable.souvik, "Souvik Pratap ", "Social Secretary", "11", "8209395292"));
         members.add(new CouncilMember(R.drawable.piyush, "Piyush Gupta", "Music Secretary", "166", "8291474751"));
         members.add(new CouncilMember(R.drawable.nikunj, "Nikunj Mohota", "Film & Media Secretary", "234", "9987446795"));
-        members.add(new CouncilMember(R.drawable.logo, "Manas Vhanmane", "Design Secretary", "9", "8291473899"));
-        members.add(new CouncilMember(R.drawable.logo, "Jayasurya Sudakaran", "Design Secretary", "9", "9715229726"));
+        members.add(new CouncilMember(R.drawable.manas, "Manas Vhanmane", "Design Secretary", "9", "8291473899"));
+        members.add(new CouncilMember(R.drawable.jayasurya, "Jayasurya Sudakaran", "Design Secretary", "9", "9715229726"));
         members.add(new CouncilMember(R.drawable.bhavya, "Bhavya Kachhwaha", "Dance Secretary", "39", "9772039949"));
-        members.add(new CouncilMember(R.drawable.logo, "Karthik Vignesh", "Literary & Speaking Arts Secretary", "266", "7024142215"));
+        members.add(new CouncilMember(R.drawable.karthik, "Karthik Vignesh", "Literary & Speaking Arts Secretary", "266", "7024142215"));
         members.add(new CouncilMember(R.drawable.arpit, "Arpit Shashwat", "Dramatics Secretary", "213", "8291339774"));
         members.add(new CouncilMember(R.drawable.sudhanshu, "Sudhanshu Verma", "Photography & Fine Arts Secretary", "15", "8058750490"));
 

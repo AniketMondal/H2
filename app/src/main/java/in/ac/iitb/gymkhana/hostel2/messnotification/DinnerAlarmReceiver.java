@@ -9,17 +9,15 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import in.ac.iitb.gymkhana.hostel2.CacheManager;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.WelcomeActivity;
-
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 29/09/17.
@@ -29,10 +27,10 @@ public class DinnerAlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        CacheManager cache = new CacheManager(context);
         Intent repeatingIntent = new Intent(context, WelcomeActivity.class);
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 101, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
 
         String menu = null;
         try {

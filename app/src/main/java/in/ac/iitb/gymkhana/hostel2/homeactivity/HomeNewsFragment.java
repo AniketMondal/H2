@@ -1,8 +1,10 @@
 package in.ac.iitb.gymkhana.hostel2.homeactivity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,7 @@ public class HomeNewsFragment extends Fragment {
             JSONArray jsonArray = complete.getJSONArray("NEWS");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject newsItem = jsonArray.getJSONObject(i);
-                newsList.add(new ExpandableItem(newsItem.getString("BRIEF"), newsItem.getString("CONTENT"), false));
+                newsList.add(new ExpandableItem(newsItem.getString("BRIEF"), newsItem.getString("CONTENT"), expanded(i)));
             }
         } catch (Exception e) {}
 
@@ -68,7 +70,21 @@ public class HomeNewsFragment extends Fragment {
             }
         });
 
+        TextView lastSynced = new TextView(getContext());
+        lastSynced.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        lastSynced.setPadding(8,8,8,8);
+        lastSynced.setGravity(Gravity.CENTER_HORIZONTAL);
+        lastSynced.setTextSize(15);
+        lastSynced.setTypeface(lastSynced.getTypeface(), Typeface.ITALIC);
+        lastSynced.setText("Last Synced at " + cache.getTime());
+        listView.addFooterView(lastSynced);
+
         return view;
+    }
+
+    boolean expanded(int i) {
+        if (i == 0) return true;
+        else return false;
     }
 
 }

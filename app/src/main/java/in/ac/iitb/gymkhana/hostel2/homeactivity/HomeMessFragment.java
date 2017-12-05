@@ -1,8 +1,11 @@
 package in.ac.iitb.gymkhana.hostel2.homeactivity;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItem;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItemAdapter;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
@@ -37,10 +41,13 @@ public class HomeMessFragment extends Fragment {
 
         final ArrayList<ExpandableItem> menuList = new ArrayList<ExpandableItem>();
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String week = "";
 
         try {
             JSONObject complete = new JSONObject(cache.getMenu());
             JSONArray jsonArray = complete.getJSONArray("DAY");
+            week = week+jsonArray.getJSONObject(0).getString("WEEK").toUpperCase();
+            //menuList.add(new ExpandableItem("Week",jsonArray.getJSONObject(0).getString("WEEK").toUpperCase(),true));
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject menuItem = jsonArray.getJSONObject(i);
                 StringBuilder menu = new StringBuilder();
@@ -52,7 +59,7 @@ public class HomeMessFragment extends Fragment {
                 menu.append(menuItem.getString("TIFFIN").trim());
                 menu.append("\n\nDINNER:\n");
                 menu.append(menuItem.getString("DINNER").trim());
-                menuList.add(new ExpandableItem(days[i], menu.toString(), expanded(i)));
+                menuList.add(new ExpandableItem(days[i], menu.toString().toUpperCase(), expanded(i)));
             }
         } catch (Exception e) {}
 
@@ -78,6 +85,22 @@ public class HomeMessFragment extends Fragment {
                 }
             }
         });
+
+        View weekView = getActivity().getLayoutInflater().inflate(R.layout.home_expandable_list_item, null, false);
+        weekView.findViewById(R.id.expandable_arrow).setVisibility(View.GONE);
+        ((TextView) weekView.findViewById(R.id.expandable_title)).setText(week.toUpperCase());
+        ((TextView) weekView.findViewById(R.id.expandable_title)).setGravity(Gravity.CENTER_HORIZONTAL);
+        weekView.setOnClickListener(null);
+        listView.addHeaderView(weekView);
+
+        TextView lastSynced = new TextView(getContext());
+        lastSynced.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        lastSynced.setPadding(8,8,8,8);
+        lastSynced.setGravity(Gravity.CENTER_HORIZONTAL);
+        lastSynced.setTextSize(15);
+        lastSynced.setTypeface(lastSynced.getTypeface(), Typeface.ITALIC);
+        lastSynced.setText("Last Synced at " + cache.getTime());
+        listView.addFooterView(lastSynced);
 
         return view;
     }

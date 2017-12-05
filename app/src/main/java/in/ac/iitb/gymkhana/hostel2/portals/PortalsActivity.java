@@ -1,22 +1,21 @@
-package in.ac.iitb.gymkhana.hostel2.settingsactivity;
+package in.ac.iitb.gymkhana.hostel2.portals;
 
-import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import in.ac.iitb.gymkhana.hostel2.CommonFunctions;
 import in.ac.iitb.gymkhana.hostel2.R;
 
-public class SettingsActivity extends AppCompatActivity
+public class PortalsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -28,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity
 
         findViewById(R.id.include_settings_content).setVisibility(View.VISIBLE);
         getFragmentManager().beginTransaction()
-                .replace(R.id.settings_framelayout, new SettingsFragment())
+                .replace(R.id.settings_framelayout, new PortalsFragment())
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,14 +66,14 @@ public class SettingsActivity extends AppCompatActivity
     }
 
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class PortalsFragment extends PreferenceFragment {
 
-        public SettingsFragment() {}
+        public PortalsFragment() {}
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings);
+            addPreferencesFromResource(R.xml.portals);
         }
     }
 }

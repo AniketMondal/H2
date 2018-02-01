@@ -1,6 +1,5 @@
 package in.ac.iitb.gymkhana.hostel2.homeactivity;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,12 +20,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import in.ac.iitb.gymkhana.hostel2.CacheManager;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItem;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItemAdapter;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 21/09/17.
@@ -34,10 +32,14 @@ import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 public class HomeMessFragment extends Fragment {
 
+    CacheManager cache;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment_list, container, false);
+
+        cache = new CacheManager(getActivity().getApplicationContext());
 
         final ArrayList<ExpandableItem> menuList = new ArrayList<ExpandableItem>();
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -94,7 +96,7 @@ public class HomeMessFragment extends Fragment {
         listView.addHeaderView(weekView);
 
         TextView lastSynced = new TextView(getContext());
-        lastSynced.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        lastSynced.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT));
         lastSynced.setPadding(8,8,8,8);
         lastSynced.setGravity(Gravity.CENTER_HORIZONTAL);
         lastSynced.setTextSize(15);

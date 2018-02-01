@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context="in.ac.iitb.gymkhana.hostel2.portals.KFCPortalActivity">
 
-    <TextView
+    <WebView
+        android:id="@+id/kfc_webview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="KFC"/>
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

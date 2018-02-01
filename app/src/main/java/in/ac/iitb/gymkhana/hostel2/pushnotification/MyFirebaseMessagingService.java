@@ -13,8 +13,12 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Calendar;
+
+import in.ac.iitb.gymkhana.hostel2.CacheManager;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.WelcomeActivity;
+import in.ac.iitb.gymkhana.hostel2.notificationsactivity.NotificationsActivity;
 
 /**
  * Created by bhavesh on 30/09/17.
@@ -27,7 +31,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.e("FCM Service", "From: " + remoteMessage.getFrom());
         Log.e("FCM Service", "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
-        Intent repeatingIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+        Intent repeatingIntent = new Intent(getApplicationContext(), NotificationsActivity.class);
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 104, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -50,8 +54,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("news", true))
-            notificationManager.notify(104, builder.build());
+        notificationManager.notify(104, builder.build());
+
+        String[] now = Calendar.getInstance().getTime().toString().split(" ");
+        String time = now[1] + " " + now[2] + " " + now[3];
+        CacheManager cache = new CacheManager(getApplicationContext());
+        cache.addNotification(title + "~~" + message + "\n\n" + time);
+
     }
 
 }

@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="in.ac.iitb.gymkhana.hostel2.portals.LANComplaintsActivity">
 
     <TextView
+        android:id="@+id/lan_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LAN"/>
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:textSize="16sp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/lan_complaint_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/add"
+        android:id="@+id/add_lan_complaint"/>
+
+</RelativeLayout>

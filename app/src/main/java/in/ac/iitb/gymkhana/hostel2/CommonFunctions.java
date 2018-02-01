@@ -28,6 +28,7 @@ import android.widget.Toast;
 import in.ac.iitb.gymkhana.hostel2.councilactivity.CouncilActivity;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity;
 import in.ac.iitb.gymkhana.hostel2.infoactivity.InfoActivity;
+import in.ac.iitb.gymkhana.hostel2.notificationsactivity.NotificationsActivity;
 import in.ac.iitb.gymkhana.hostel2.portals.PortalsActivity;
 import in.ac.iitb.gymkhana.hostel2.settingsactivity.SettingsActivity;
 import in.ac.iitb.gymkhana.hostel2.ssologin.LoginPostRequest;
@@ -46,6 +47,10 @@ public class CommonFunctions {
         switch (id) {
             case R.id.nav_home:
                 activity.startActivity(new Intent().setClass(activity, HomeActivity.class));
+                activity.finish();
+                break;
+            case R.id.nav_notifications:
+                activity.startActivity(new Intent().setClass(activity, NotificationsActivity.class));
                 activity.finish();
                 break;
             case R.id.nav_council:

@@ -2,21 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:title="KFC Portal"
-        android:summary="Place your order for next KFC visit here">
-        <intent android:action="in.ac.iitb.gymkhana.hostel2.portals.KFCPortalActivity" />
-    </Preference>
-
-    <Preference
         android:title="LAN Complaints"
         android:summary="Report LAN problems of your room">
         <intent android:action="in.ac.iitb.gymkhana.hostel2.portals.LANComplaintsActivity" />
     </Preference>
 
     <Preference
-        android:title="Mess Rebate"
-        android:summary="Apply for mess rebate here">
-        <intent android:action="in.ac.iitb.gymkhana.hostel2.portals.MessRebateActivity" />
+        android:title="KFC Portal"
+        android:summary="Place your order for next KFC visit here">
+        <intent android:action="in.ac.iitb.gymkhana.hostel2.portals.KFCPortalActivity" />
     </Preference>
+
+    <!--<Preference-->
+        <!--android:title="Mess Rebate"-->
+        <!--android:summary="Apply for mess rebate here">-->
+        <!--<intent android:action="in.ac.iitb.gymkhana.hostel2.portals.MessRebateActivity" />-->
+    <!--</Preference>-->
 
 </PreferenceScreen>

@@ -82,15 +82,16 @@ public class NotificationsActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView content = (TextView) view.findViewById(R.id.expandable_content);
                 ImageView arrow = (ImageView) view.findViewById(R.id.expandable_arrow);
-                if(content.isShown()){
-                    content.setVisibility(View.GONE);
-                    content.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
-                    arrow.setImageResource(R.drawable.down_arrow);
-                }
-                else{
-                    content.setVisibility(View.VISIBLE);
-                    content.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
-                    arrow.setImageResource(R.drawable.up_arrow);
+                if (content != null) {
+                    if (content.isShown()) {
+                        content.setVisibility(View.GONE);
+                        content.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
+                        arrow.setImageResource(R.drawable.down_arrow);
+                    } else {
+                        content.setVisibility(View.VISIBLE);
+                        content.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+                        arrow.setImageResource(R.drawable.up_arrow);
+                    }
                 }
             }
         });

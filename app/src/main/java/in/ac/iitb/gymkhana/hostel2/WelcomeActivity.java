@@ -17,6 +17,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -55,8 +57,9 @@ public class WelcomeActivity extends AppCompatActivity {
     public static String newsURL = "https://gymkhana.iitb.ac.in/~hostel2/appdata/news_app.json";
     public static String calURL = "https://gymkhana.iitb.ac.in/~hostel2/appdata/calendar.jpg";
     public static String cultGCurl = "https://gymkhana.iitb.ac.in/~cultural/index.php?key1=arch&key2=gc";
-    public static String techGCurl = "http://stab-iitb.org/tech-gcrankings-2016-17";
+    public static String techGCurl = "http://tech-iitb.org/gcrankings-2017-18";
     public static String sportsGCurl = "https://gymkhana.iitb.ac.in/~sports/index.php?r=events/gc";
+    public static String lanComplaintsURL = "https://gymkhana.iitb.ac.in/~hostel2/lancomplaints/list.txt";
 
     public static String SSO_ACCESS_TOKEN;
 
@@ -86,6 +89,7 @@ public class WelcomeActivity extends AppCompatActivity {
         getNews();
         getCalendar();
 
+        Log.e("TOKEN", "" + FirebaseInstanceId.getInstance().getToken());
 
         new Handler().postDelayed(new Runnable() {
             @Override

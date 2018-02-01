@@ -19,11 +19,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import in.ac.iitb.gymkhana.hostel2.CacheManager;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItem;
 import in.ac.iitb.gymkhana.hostel2.homeactivity.HomeActivity.ExpandableItemAdapter;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 /**
  * Created by bhavesh on 21/09/17.
@@ -31,10 +31,14 @@ import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.cache;
 
 public class HomeNewsFragment extends Fragment {
 
+    CacheManager cache;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment_list, container, false);
+
+        cache = new CacheManager(getActivity().getApplicationContext());
 
         final ArrayList<ExpandableItem> newsList = new ArrayList<ExpandableItem>();
 
@@ -71,13 +75,13 @@ public class HomeNewsFragment extends Fragment {
         });
 
         TextView lastSynced = new TextView(getContext());
-        lastSynced.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        lastSynced.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT));
         lastSynced.setPadding(8,8,8,8);
         lastSynced.setGravity(Gravity.CENTER_HORIZONTAL);
         lastSynced.setTextSize(15);
         lastSynced.setTypeface(lastSynced.getTypeface(), Typeface.ITALIC);
         lastSynced.setText("Last Synced at " + cache.getTime());
-        listView.addFooterView(lastSynced);
+        listView.addFooterView(lastSynced,null,false);
 
         return view;
     }

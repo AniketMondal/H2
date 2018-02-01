@@ -21,12 +21,18 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".homeactivity.HomeActivity"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.GreyBack" />
+        <activity
+            android:name=".notificationsactivity.NotificationsActivity"
+            android:label="Notifications"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.GreyBack" />
         <activity
@@ -55,6 +61,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="in.ac.iitb.gymkhana.hostel2.portals.KFCPortalActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -64,6 +71,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="in.ac.iitb.gymkhana.hostel2.portals.LANComplaintsActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -73,10 +81,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="in.ac.iitb.gymkhana.hostel2.portals.MessRebateActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
 
         <receiver
             android:name=".messnotification.BreakfastAlarmReceiver"
@@ -101,7 +109,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
 
         <service android:name=".pushnotification.MyFirebaseMessagingService">
             <intent-filter>

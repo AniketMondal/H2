@@ -18,6 +18,7 @@ public class CacheManager {
     private static final String MENU = "menu";
     private static final String NEWS = "news";
     private static final String TIME = "time";
+    private static final String NOTIFICATIONS = "notifications";
 
     public CacheManager(Context context) {
         this.context = context;
@@ -40,6 +41,14 @@ public class CacheManager {
         editor.commit();
     }
 
+    public void addNotification(String notification) {
+        StringBuffer temp = new StringBuffer();
+        temp.append(""+pref.getString(NOTIFICATIONS, null));
+        temp.append("~~~~"+notification);
+        editor.putString(NOTIFICATIONS, temp.toString());
+        editor.commit();
+    }
+
     public String getMenu() {
         return pref.getString(MENU, null);
     }
@@ -50,6 +59,10 @@ public class CacheManager {
 
     public String getTime() {
         return pref.getString(TIME, null);
+    }
+
+    public String getNotifications() {
+        return pref.getString(NOTIFICATIONS, "");
     }
 
 }

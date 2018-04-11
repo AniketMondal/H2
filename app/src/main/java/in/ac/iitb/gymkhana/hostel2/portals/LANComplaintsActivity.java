@@ -1,40 +1,28 @@
 package in.ac.iitb.gymkhana.hostel2.portals;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 
@@ -48,8 +36,6 @@ import javax.net.ssl.X509TrustManager;
 import in.ac.iitb.gymkhana.hostel2.R;
 import in.ac.iitb.gymkhana.hostel2.ssologin.SessionManager;
 
-import static in.ac.iitb.gymkhana.hostel2.WelcomeActivity.lanComplaintsURL;
-
 public class LANComplaintsActivity extends AppCompatActivity {
 
     private SessionManager session;
@@ -62,7 +48,7 @@ public class LANComplaintsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.portal_lan_activity);
+        setContentView(R.layout.portal_lan_mess_activity);
         session = new SessionManager(getApplicationContext());
         context = this;
         if (!session.isLoggedIn()){
@@ -70,7 +56,7 @@ public class LANComplaintsActivity extends AppCompatActivity {
             onBackPressed();
         }
 
-        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add_lan_complaint);
+        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.portal_add_button);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,13 +102,13 @@ public class LANComplaintsActivity extends AppCompatActivity {
             }
         });
 
-        status = (TextView) findViewById(R.id.lan_status);
+        status = (TextView) findViewById(R.id.portal_status);
         status.setText("Loading");
 
         list = new ArrayList<LanComplaint>();
 
         adapter = new LanComplaintAdapter(this, list);
-        listView = (ListView) findViewById(R.id.lan_complaint_list);
+        listView = (ListView) findViewById(R.id.portal_list);
 
         new GetLANComplaints().execute();
 
@@ -137,11 +123,13 @@ public class LANComplaintsActivity extends AppCompatActivity {
     class LanComplaint {
         String date;
         String room;
+        String problem;
         String status;
 
-        public LanComplaint(String date, String room, String status) {
+        public LanComplaint(String date, String room, String problem, String status) {
             this.date = date;
             this.room = room;
+            this.problem = problem;
             this.status = status;
         }
 
@@ -153,6 +141,9 @@ public class LANComplaintsActivity extends AppCompatActivity {
         }
         public String getStatus() {
             return status;
+        }
+        public String getProblem() {
+            return problem;
         }
     }
 
@@ -169,18 +160,20 @@ public class LANComplaintsActivity extends AppCompatActivity {
             View listItemView = convertView;
 
             if(listItemView == null) {
-                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.portal_lan_complaint_item, parent, false);
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.portal_item, parent, false);
             }
 
             LanComplaint currentItem = getItem(position);
 
-            TextView date = (TextView) listItemView.findViewById(R.id.lan_complaint_date);
-            TextView room = (TextView) listItemView.findViewById(R.id.lan_complaint_room);
-            TextView status = (TextView) listItemView.findViewById(R.id.lan_complaint_status);
+            TextView date = (TextView) listItemView.findViewById(R.id.portal_item_timestamp);
+            TextView room = (TextView) listItemView.findViewById(R.id.portal_item_text1);
+            TextView status = (TextView) listItemView.findViewById(R.id.portal_item_status);
+            TextView problem = (TextView) listItemView.findViewById(R.id.portal_item_text2);
 
-            date.setText("Date : " + currentItem.getDate());
+            date.setText("Timestamp : " + currentItem.getDate());
             room.setText("Room : " + currentItem.getRoom());
             status.setText(currentItem.getStatus());
+            problem.setText("Problem : " + currentItem.getProblem());
 
             return listItemView;
         }
@@ -189,14 +182,19 @@ public class LANComplaintsActivity extends AppCompatActivity {
     class GetLANComplaints extends AsyncTask<Void,Void,String> {
 
         String url;
+        URL URL;
 
         @Override
         protected void onPreExecute() {
-            url = lanComplaintsURL;
+            url = "https://gymkhana.iitb.ac.in/~hostel2/portals/lancomplaints/app/find.php";
+            try {
+                URL = new URL(url);
+            } catch (Exception e) { }
         }
 
         @Override
         protected String doInBackground(Void... voids) {
+            HttpsURLConnection conn;
             try {
                 // To ignore the certificate error on non-IITB network
                 // ------------------START------------------
@@ -220,25 +218,32 @@ public class LANComplaintsActivity extends AppCompatActivity {
                 HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                 // ------------------END------------------
 
+                conn = (HttpsURLConnection) URL.openConnection();
+                conn.setRequestMethod("POST");
+                String urlParameters = "rollno="+session.getRollNo();
+                conn.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(urlParameters);
+                wr.close();
 
-                URL url1 = new URL(lanComplaintsURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url1.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String reader;
-                while ((reader = bufferedReader.readLine()) != null) {
-                    String[] complaint = reader.split("~~");
-                    if (session.getRollNo().equals(complaint[1])) {
-                        list.add(new LanComplaint(complaint[0], complaint[3], complaint[5]));
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    if (inputLine.equals("Error")) {
+                        return "Error";
+                    } else if (inputLine.equals("Empty")) {
+                        return "Empty";
                     }
+                    String[] complaint = inputLine.split("~~");
+                    list.add(new LanComplaint(complaint[0], complaint[1], complaint[2], complaint[3]));
                 }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return "";
-            } catch (Exception e){
-                return null;
-            }
+                in.close();
+                conn.disconnect();
+            } catch (Exception e) { }
+
+            return "";
         }
 
         @Override
@@ -246,9 +251,12 @@ public class LANComplaintsActivity extends AppCompatActivity {
             if (!list.isEmpty()) {
                 status.setVisibility(View.GONE);
                 listView.setAdapter(adapter);
-            } else {
+            } else if (s.equals("Empty")) {
                 listView.setVisibility(View.GONE);
                 status.setText("No previous LAN Complaints registered");
+            } else {
+                listView.setVisibility(View.GONE);
+                status.setText("Some error ocurred in getting previous requests");
             }
         }
     }
@@ -260,7 +268,7 @@ public class LANComplaintsActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            url = "https://gymkhana.iitb.ac.in/~hostel2/lancomplaints/addLANcomplaint.php";
+            url = "https://gymkhana.iitb.ac.in/~hostel2/portals/lancomplaints/app/add.php";
             try {
                 URL = new URL(url);
             } catch (Exception e) { }
@@ -296,7 +304,7 @@ public class LANComplaintsActivity extends AppCompatActivity {
 
                 conn = (HttpsURLConnection) URL.openConnection();
                 conn.setRequestMethod("POST");
-                String urlParameters = "rollno="+session.getRollNo()+"&name="+session.getName()+"&room="+params[0]+"&problem="+params[1];
+                String urlParameters = "rollno="+session.getRollNo()+"&name="+session.getName()+"&roomno="+params[0]+"&problem="+params[1];
                 conn.setDoOutput(true);
                 DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
                 wr.writeBytes(urlParameters);

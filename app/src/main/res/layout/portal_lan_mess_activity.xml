@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="in.ac.iitb.gymkhana.hostel2.portals.LANComplaintsActivity">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/lan_status"
+        android:id="@+id/portal_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -17,7 +16,7 @@
         android:textSize="16sp"/>
 
     <ListView
-        android:id="@+id/lan_complaint_list"
+        android:id="@+id/portal_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -28,6 +27,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:src="@drawable/add"
-        android:id="@+id/add_lan_complaint"/>
+        android:id="@+id/portal_add_button"/>
 
 </RelativeLayout>

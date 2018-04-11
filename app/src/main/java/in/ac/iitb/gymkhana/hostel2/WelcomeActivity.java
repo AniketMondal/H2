@@ -59,7 +59,6 @@ public class WelcomeActivity extends AppCompatActivity {
     public static String cultGCurl = "https://gymkhana.iitb.ac.in/~cultural/index.php?key1=arch&key2=gc";
     public static String techGCurl = "http://tech-iitb.org/gcrankings-2017-18";
     public static String sportsGCurl = "https://gymkhana.iitb.ac.in/~sports/index.php?r=events/gc";
-    public static String lanComplaintsURL = "https://gymkhana.iitb.ac.in/~hostel2/lancomplaints/list.txt";
 
     public static String SSO_ACCESS_TOKEN;
 

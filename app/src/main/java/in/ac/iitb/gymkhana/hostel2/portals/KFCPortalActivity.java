@@ -24,7 +24,7 @@ public class KFCPortalActivity extends AppCompatActivity {
         kfcWebView.getSettings().setLoadWithOverviewMode(true);
         kfcWebView.getSettings().setUseWideViewPort(true);
         kfcWebView.getSettings().setBuiltInZoomControls(true);
-        kfcWebView.loadUrl("https://gymkhana.iitb.ac.in/~hostel2/kfc/");
+        kfcWebView.loadUrl("https://gymkhana.iitb.ac.in/~hostel2/portals/kfc/");
 
     }
 

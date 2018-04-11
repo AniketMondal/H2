@@ -7,6 +7,7 @@
     android:padding="12dp">
 
     <ImageView
+        android:id="@+id/portal_item_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="2dp"
@@ -21,14 +22,13 @@
         android:layout_marginLeft="12dp">
 
         <TextView
-            android:id="@+id/lan_complaint_date"
+            android:id="@+id/portal_item_timestamp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:text="Date : 12-10-2017"/>
+            android:text="Timestamp : 12-10-2017"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,19 +36,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/lan_complaint_room"
+                android:id="@+id/portal_item_text1"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Room No: 189"/>
 
             <TextView
-                android:id="@+id/lan_complaint_status"
+                android:id="@+id/portal_item_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Submitted"/>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/portal_item_text2"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Problem: None"/>
 
     </LinearLayout>
 

@@ -31,17 +31,20 @@ public class CouncilCultFragment extends Fragment {
         View view = inflater.inflate(R.layout.council_fragment_grid, container, false);
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
-        members.add(new CouncilMember(R.drawable.kaushick, "Kaushick VM", "Cultural Councillor", "89", "9004136737"));
-        members.add(new CouncilMember(R.drawable.pratyush, "Pratyush Sharma", "Social Secretary", "101", "9717223158"));
-        members.add(new CouncilMember(R.drawable.souvik, "Souvik Pratap ", "Social Secretary", "11", "8209395292"));
-        members.add(new CouncilMember(R.drawable.piyush, "Piyush Gupta", "Music Secretary", "166", "8291474751"));
-        members.add(new CouncilMember(R.drawable.nikunj, "Nikunj Mohota", "Film & Media Secretary", "234", "9987446795"));
-        members.add(new CouncilMember(R.drawable.manas, "Manas Vhanmane", "Design Secretary", "9", "8291473899"));
-        members.add(new CouncilMember(R.drawable.jayasurya, "Jayasurya Sudakaran", "Design Secretary", "9", "9715229726"));
-        members.add(new CouncilMember(R.drawable.bhavya, "Bhavya Kachhwaha", "Dance Secretary", "39", "9772039949"));
-        members.add(new CouncilMember(R.drawable.karthik, "Karthik Vignesh", "Literary & Speaking Arts Secretary", "266", "7024142215"));
-        members.add(new CouncilMember(R.drawable.arpit, "Arpit Shashwat", "Dramatics Secretary", "213", "8291339774"));
-        members.add(new CouncilMember(R.drawable.sudhanshu, "Sudhanshu Verma", "Photography & Fine Arts Secretary", "15", "8058750490"));
+        members.add(new CouncilMember(R.drawable.arpit, "Arpit Shashwat", "Cultural Councillor", "213", "8291339774"));
+        members.add(new CouncilMember(R.drawable.chahal, "Divyanshu Chahal", "Events Nominee", "17", "8454950371"));
+        members.add(new CouncilMember(R.drawable.ayush, "Ayush Raj", "Social Secretary", "207", "9521421205"));
+        members.add(new CouncilMember(R.drawable.piyush, "Piyush Kumar", "Social Secretary", "252", "7045563948"));
+        members.add(new CouncilMember(R.drawable.tk, "Tamoghno Pramanik", "Music Secretary", "172", "8777036303"));
+        members.add(new CouncilMember(R.drawable.subham, "Shubham Gupta", "Film & Media Secretary", "43", "7404356476"));
+        members.add(new CouncilMember(R.drawable.rohit, "Rohit Chaudhary", "Design Secretary", "248", "8340573518"));
+        members.add(new CouncilMember(R.drawable.ashish, "Ashish Kumar", "Design Secretary", "22", "8630410295"));
+        members.add(new CouncilMember(R.drawable.sumit, "Sumit Patel", "Dance Secretary", "161", "9990260285"));
+        members.add(new CouncilMember(R.drawable.malale, "Ashmak Malale", "Speaking Arts Secretary", "284", "9834617718"));
+        members.add(new CouncilMember(R.drawable.abhay, "Abhay Kumar", "Dramatics Secretary", "179", "9672660282"));
+        members.add(new CouncilMember(R.drawable.soni, "Shubham Soni", "Fine Arts Secretary", "69", "9131046336"));
+        members.add(new CouncilMember(R.drawable.kolhe, "Chaitanya Kolhe", "Literary Arts Secretary", "47", "9834025294"));
+        members.add(new CouncilMember(R.drawable.dhruv, "Kunal Dhruv", "Photography Secretary", "50", "9340473585"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

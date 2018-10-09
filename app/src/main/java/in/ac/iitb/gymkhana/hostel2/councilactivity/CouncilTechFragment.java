@@ -31,9 +31,9 @@ public class CouncilTechFragment extends Fragment {
         View view = inflater.inflate(R.layout.council_fragment_grid, container, false);
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
-        members.add(new CouncilMember(R.drawable.pranav, "Pranav Kulkarni", "Tech Councillor", "223", "8805540900"));
-        members.add(new CouncilMember(R.drawable.aman, "Aman Singhal", "Tech Secretary", "271", "9987108575"));
-        members.add(new CouncilMember(R.drawable.harinder, "Harinder Choudhary", "Tech Secretary", "271", "9987108601"));
+        members.add(new CouncilMember(R.drawable.aman, "Aman Singhal", "Tech Councillor", "271", "9987108575"));
+        members.add(new CouncilMember(R.drawable.prusty, "Adarsh Prusty", "Tech Secretary", "81", "9082463134"));
+        members.add(new CouncilMember(R.drawable.kavin, "Kavin Agarwal", "Tech Secretary", "69", "9166328428"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

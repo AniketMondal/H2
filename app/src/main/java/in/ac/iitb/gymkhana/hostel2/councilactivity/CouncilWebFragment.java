@@ -32,7 +32,7 @@ public class CouncilWebFragment extends Fragment {
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
         members.add(new CouncilMember(R.drawable.nikhil, "B. Nikhil", "Web & Comp Secretary", "124", "9912650657"));
-        members.add(new CouncilMember(R.drawable.anik, "Aniket Mondal", "Web & Comp Secretary", "207", "8918762570"));
+        members.add(new CouncilMember(R.drawable.aniket, "Aniket Mondal", "Web & Comp Secretary", "207", "8918762570"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

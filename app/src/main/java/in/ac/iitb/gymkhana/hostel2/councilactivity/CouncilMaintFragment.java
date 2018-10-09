@@ -33,7 +33,7 @@ public class CouncilMaintFragment extends Fragment {
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
         members.add(new CouncilMember(R.drawable.arman, "Arman Khan", "Maintenance Councillor", "213", "9444852357"));
         members.add(new CouncilMember(R.drawable.prem, "Prem Sekhar", "Maintenance Secretary", "141", "9885651290"));
-        members.add(new CouncilMember(R.drawable.thorve, "Rajesh Thorve", "Maintenance Secretary", "84", "9518351175"));
+        members.add(new CouncilMember(R.drawable.rajesh, "Rajesh Thorve", "Maintenance Secretary", "84", "9518351175"));
         members.add(new CouncilMember(R.drawable.adi, "Aditya Maitri", "Maintenance Secretary", "50", "8310076793"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);

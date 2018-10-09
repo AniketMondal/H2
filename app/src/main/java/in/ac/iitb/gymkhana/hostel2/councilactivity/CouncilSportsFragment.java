@@ -33,11 +33,11 @@ public class CouncilSportsFragment extends Fragment {
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
         members.add(new CouncilMember(R.drawable.sarvind, "Sarvind Rankawat", "Sports Councillor", "155", "8291339558"));
         members.add(new CouncilMember(R.drawable.seervi, "Pradeep Seervi", "Sports Secretary", "255", "9587453407"));
-        members.add(new CouncilMember(R.drawable.adarsh, "Adarsh Kumawat", "Sports Secretary", "261", "9521189751"));
+        members.add(new CouncilMember(R.drawable.kumawat, "Adarsh Kumawat", "Sports Secretary", "261", "9521189751"));
         members.add(new CouncilMember(R.drawable.amlan, "Amlan Mishra", "Sports Secretary", "182", "8851478291"));
         members.add(new CouncilMember(R.drawable.eswar, "Eswar Savalapurapu", "Sports Secretary", "87", "9951676066"));
         members.add(new CouncilMember(R.drawable.meena, "Divyansh Meena", "Sports Secretary", "175", "9672380567"));
-        members.add(new CouncilMember(R.drawable.rituraj,"Rituraj Bagade", "Sports Secretary", "43", "9967441390"));
+        members.add(new CouncilMember(R.drawable.bagade,"Rituraj Bagade", "Sports Secretary", "43", "9967441390"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
         GridView gridView = (GridView) view.findViewById(R.id.council_grid);

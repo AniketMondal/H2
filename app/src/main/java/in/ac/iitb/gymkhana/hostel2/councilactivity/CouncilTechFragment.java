@@ -32,7 +32,7 @@ public class CouncilTechFragment extends Fragment {
 
         final ArrayList<CouncilMember> members = new ArrayList<CouncilMember>();
         members.add(new CouncilMember(R.drawable.aman, "Aman Singhal", "Tech Councillor", "271", "9987108575"));
-        members.add(new CouncilMember(R.drawable.prusty, "Adarsh Prusty", "Tech Secretary", "81", "9082463134"));
+        members.add(new CouncilMember(R.drawable.pursty, "Adarsh Prusty", "Tech Secretary", "81", "9082463134"));
         members.add(new CouncilMember(R.drawable.kavin, "Kavin Agarwal", "Tech Secretary", "69", "9166328428"));
 
         CouncilMemberAdapter adapter = new CouncilMemberAdapter(getActivity(), members);
